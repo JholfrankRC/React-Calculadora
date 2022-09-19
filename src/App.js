@@ -5,7 +5,7 @@ import Boton from './components/Boton'
 import BotonClear from './components/BotonClear';
 import Pantalla from './components/Pantalla';
 import { useState } from 'react';
-import { evaluate } from 'mathjs';
+
 
 
 function App() {
@@ -18,12 +18,15 @@ function App() {
   };
 
   //Evaluar input con mathjs
-  const calcularResultado = () => {
+  const calcularResultado = async () => {
     if (input){
-      setInput(evaluate(input));
+      const respuesta = await fetch(`http://localhost:4000/operacion/${input}`);
+      const resultado = await respuesta.json();
+      setInput(resultado.resultado);
+      console.log(resultado);
     } else {
       alert("Por favor ingrese valores para realizar los cálculos");
-    }
+    } 
      
   };
 
